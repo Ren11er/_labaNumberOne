@@ -6,10 +6,14 @@ using namespace std;
 
 double f1(int x)
 {
-    return pow(x,4) - 3*x - 20;
+    return pow(x,2);
 }
 
-
+int _maxF1(int a, int b) {
+    int max = 0;
+    for (int i = a; i < b; i++) if (abs(f1(i)) > max) max = abs(f1(i));
+    return max;
+}
 
 
 int _Menu(int vbr) {
@@ -31,17 +35,29 @@ int _Menu(int vbr) {
     return vbr;
 }
 
-int x = 1;
 
-void _Graf() {
 
-        int const length = 30; //абцисса (x)
+int _findF1(int a, int b, int ep) {
+    int touch;
+    while ((b - a) / 2 > ep) {
+        touch = (a + b) / 2;
+        if ((f1(a) * f1(touch)) > 0) a = touch;
+        else b = touch;
+    }
+    return touch;
+}
 
-        int const width = 30;  //ордината (y)
+void _Graf(int N, int M) {
 
-        char scene[length*2][width * 2]; // оси ординат делаем в 2 раза больше (под отрицательные значения)
+        int const length = M-N; //абцисса (x)
 
-        //Создание графика и его прорисовка
+        int const width = _maxF1(N, M);  //ордината (y)
+
+        char** scene = new char*[length*2]; // оси ординат делаем в 2 раза больше (под отрицательные значения)
+        for (int i = 0; i < length * 2; i++) scene[i] = new char[width * 2];  //создание матрицы
+        
+            
+            //Создание графика и его прорисовка
         for (int x = 0; x < length; x++) {
             for (int y = 0; y < width * 2; y++)
                 scene[x][y] = '.';
@@ -79,9 +95,18 @@ int main()
     switch (menu)
     {
     case 1: {
-        cout << "====================" << endl;
-        _Graf();
-        cout << "====================" << endl;
+
+        int a, b; // интервал от a до b
+        cin >> a >> b;
+
+        int ep; // эпсилент
+        cin >> ep; 
+
+        int touch = _findF1(a, b, ep);  //Точка 
+
+        for (int i = 0; i < b; i++)cout << "="; //Красиииивое
+        cout << endl;
+        _Graf(a, b);
         break;
     }
     case 2: {
