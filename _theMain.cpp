@@ -6,13 +6,7 @@ using namespace std;
 
 double f1(int x)
 {
-    return pow(x,2);
-}
-
-int _maxF1(int a, int b) {
-    int max = 0;
-    for (int i = a; i < b; i++) if (abs(f1(i)) > max) max = abs(f1(i));
-    return max;
+    return pow(x, 4) - 3 * x - 20;
 }
 
 
@@ -51,7 +45,7 @@ void _Graf(int N, int M) {
 
         int const length = M-N; //абцисса (x)
 
-        int const width = _maxF1(N, M);  //ордината (y)
+        int const width = 23;  //ордината (y)
 
         char** scene = new char*[length*2]; // оси ординат делаем в 2 раза больше (под отрицательные значения)
         for (int i = 0; i < length * 2; i++) scene[i] = new char[width * 2];  //создание матрицы
@@ -68,12 +62,12 @@ void _Graf(int N, int M) {
         for (int x = 0 - length; x < length; x++) {
             double y = f1(x); // функция      
             if (abs(y) < width) // проверяем чтобы значение за пределы не выходило
-                scene[x + length/2+1][(int)round(y - width)] = '*'; // ставим точку
+                scene[x + length / 2][(int)round(y + width)] = '*'; // ставим точку
 
         }
 
         //вывод на экран
-        for (int y = width * 2; y >= 0; y--) {
+        for (int y = width * 2-1; y >= 0; y--) {
             for (int x = 0; x < length; x++) {
                 if(x == length / 2) cout << abs(y - width);
                 cout << scene[x][y];
@@ -103,6 +97,8 @@ int main()
         cin >> ep; 
 
         int touch = _findF1(a, b, ep);  //Точка 
+
+        cout << touch << endl;
 
         for (int i = 0; i < b; i++)cout << "="; //Красиииивое
         cout << endl;
