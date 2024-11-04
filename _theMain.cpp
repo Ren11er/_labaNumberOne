@@ -9,6 +9,10 @@ double f1(int x)
     return pow(x, 4) - 3 * x - 20;
 }
 
+bool Check(int a) {
+    for (int i = 1; i <= a; i++) { if (a == i * (i + 1) / 2) return true; }
+    return false;
+}
 
 int _Menu(int vbr) {
 
@@ -29,6 +33,19 @@ int _Menu(int vbr) {
     return vbr;
 }
 
+
+void _Proverka(int a) {
+    int sum = 0, schet = 0;
+    for (int i = 1; i <= a; i++)
+    {
+        if (Check(i) == true && schet <= 3 && (sum + i * (i + 1) / 2) <= a) {
+            sum += i * (i + 1) / 2;
+            schet++;
+        }
+    }
+    if (schet == 3 && sum == a) cout << "Число выполняет условие!" << endl;
+    else cout << "Число условие не выполняет!";
+}
 
 
 int _findF1(int a, int b, int ep) {
@@ -106,6 +123,9 @@ int main()
         break;
     }
     case 2: {
+        int a;
+        cin >> a;
+        _Proverka(a);
         break;
     }
     default:
